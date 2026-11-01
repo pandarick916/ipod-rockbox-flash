@@ -1,0 +1,14 @@
+
+# added by github-repo-publisher
+appid_secret.txt
+wechat.env
+*.env
+.env
+credentials.json
+*.pem
+id_rsa
+id_dsa
+id_ed25519
+__pycache__/
+node_modules/
+system-commandline-sentinel-files/
