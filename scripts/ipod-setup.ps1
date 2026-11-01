@@ -115,7 +115,7 @@ function Find-FileUpward($pattern, $startDir) {
         if (-not $dir) { break }
         # 每一层都先看目录本身，再看它的 files 子目录
         # （下载的东西通常堆在 第三期_iPod刷机\files 里）
-        foreach ($probe in @($dir, (Join-Path $dir 'files'))) {
+        foreach ($probe in @($dir, (Join-Path $dir 'files'), (Join-Path $dir 'assets'))) {
             if (-not (Test-Path $probe)) { continue }
             $hits = Get-ChildItem -Path $probe -Filter $pattern -File -ErrorAction SilentlyContinue |
                     Where-Object { $_.Name -notlike '*manual*' -and $_.Name -notlike '*Press_Kit*' -and $_.Name -notlike '*Utility*' } |
@@ -145,7 +145,9 @@ if (-not $ThemeZip) {
     $up1 = Split-Path -Parent $Script:Root
     $searchDirs = @($Script:Root, $up1,
                     (Join-Path $Script:Root 'files'),
-                    (Join-Path $up1 'files'))
+                    (Join-Path $up1 'files'),
+                    (Join-Path $Script:Root 'assets'),
+                    (Join-Path $up1 'assets'))
     foreach ($d in $searchDirs) {
         if (-not $d -or -not (Test-Path $d)) { continue }
         $candidates += Get-ChildItem -Path $d -Filter "*.zip" -File -ErrorAction SilentlyContinue |
